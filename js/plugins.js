@@ -38,7 +38,7 @@ function Countdown() {
 		labels1: ['Year', 'Month', 'Week', 'Day', 'Hour', 'Minute', 'Second'],
 		compactLabels: ['y', 'm', 'w', 'd'], // The compact texts for the counters
 		whichLabels: null, // Function to determine which labels to use
-		timeSeparator: ':', // Separator for time periods
+		timeSeparator: '<span class=\'blink\'>:</span>', // Separator for time periods
 		isRTL: false // True for right-to-left languages, false for left-to-right
 	};
 	this._defaults = {

@@ -53,7 +53,6 @@ var Multiple = {
     
     _$el    = $('body');
     _$count = $('#count');
-    _layout = '{yn}{yl} {on}{ol} {wn}{wl} {dn}{dl} {hnn}<span class="blink">{sep}</span>{mnn}<span class="blink">{sep}</span>{snn}'
 
     _target = new Event(Utils.getParams());
     _event  = new Date(
@@ -74,7 +73,6 @@ var Multiple = {
         countdown({
             compact: true,
             since: _event,
-            layout: _layout,
             format: _target.format
           });
     } else {
@@ -85,7 +83,6 @@ var Multiple = {
             until: _event,
             compact: true,
             format: _target.format,
-            layout: _layout,
             onExpiry: Multiple.initialize
           });
     }
