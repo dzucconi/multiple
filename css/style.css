@@ -217,6 +217,7 @@ html, body {
 	font-size: 36px;
 	overflow: hidden;
 	text-shadow: rgba(0, 0, 0, 0.05) 0 0 1px;
+  font-family: 'Lucida Grande', sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
