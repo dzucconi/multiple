@@ -1,4 +1,4 @@
-/**
+/***
  * Multiple (2010-Present)
  * Damon Zucconi
  * CC BY-SA 3.0
@@ -32,7 +32,7 @@
           hash,
           vars = {},
           hashes = window.location.href.slice(window.location.href.indexOf('?') + 1)
-                                         .split('&');
+                                       .split('&');
 
         for (i = hashes.length - 1; i >= 0; i--) {
           hash = hashes[i].split('=');
@@ -45,7 +45,6 @@
 
     initialize: function () {
       var target = new Multiple.models.occurrence(Multiple.helpers.getParams()),
-          $el = $('body'),
           $count = $('#count'),
           _event = new Date(
               target.month   + 
@@ -55,8 +54,6 @@
               target.minute  + ":" + 
               target.second
             );
-
-      $el.css('backgroundColor', target.bgcolor);
 
       if (Multiple.helpers.status(_event)) {
         $count.
@@ -78,9 +75,12 @@
               onExpiry: Multiple.initialize
             });
       }
+
+      $('body').css('backgroundColor', target.bgcolor);
+
+      $count.fitText(1.5);
     }
   };
 
   $(function () { Multiple.initialize(); });
-
 }());
