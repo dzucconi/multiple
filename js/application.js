@@ -23,7 +23,7 @@
     },
 
     helpers: {
-      status: function (target) {
+      hasPassed: function (target) {
         return new Date() > target;
       },
 
@@ -44,7 +44,9 @@
     },
 
     initialize: function () {
-      var target = new Multiple.models.occurrence(Multiple.helpers.getParams()),
+      var _options,
+          options,
+          target = new Multiple.models.occurrence(Multiple.helpers.getParams()),
           $count = $('#count'),
           _event = new Date(
               target.month   + 
@@ -55,26 +57,48 @@
               target.second
             );
 
-      if (Multiple.helpers.status(_event)) {
-        $count.
-          countdown('destroy').
-          css('color', target.color).
-          countdown({
-              compact: true,
-              since: _event,
-              format: target.format
-            });
-      } else {
-        $count.
-          countdown('destroy').
-          css('color', target.color).
-          countdown({
-              until: _event,
-              compact: true,
-              format: target.format,
-              onExpiry: Multiple.initialize
-            });
-      }
+      // if (Multiple.helpers.status(_event)) {
+      //   $count.
+      //     countdown('destroy').
+      //     css('color', target.color).
+      //     countdown({
+      //         compact: true,
+      //         since: _event,
+      //         format: target.format
+      //       });
+      // } else {
+      //   $count.
+      //     countdown('destroy').
+      //     css('color', target.color).
+      //     countdown({
+      //         until: _event,
+      //         compact: true,
+      //         format: target.format,
+      //         onExpiry: Multiple.initialize
+      //       });
+      // }
+
+      _options = {
+        since: {
+          compact: true,
+          since: _event,
+          format: target.format
+        },
+
+        until: {
+          until: _event,
+          compact: true,
+          format: target.format,
+          onExpiry: Multiple.initialize 
+        }
+      };
+
+      if (Multiple.helpers.hasPassed(_event)) { options = _options.since; } else { options = _options.until; };
+
+      $count.
+        css('color', target.color).
+        countdown('destroy').
+        countdown(options);
 
       $('body').css('backgroundColor', target.bgcolor);
 
