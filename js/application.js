@@ -4,89 +4,83 @@
  * CC BY-SA 3.0
  **/
 
-var Event = function(params) {
-  this.year    = params['year']    || "1900";
-  this.month   = params['month']   || "January";
-  this.day     = params['day']     || "01";
-  this.hour    = params['hour']    || "00";
-  this.minute  = params['minute']  || "00";
-  this.second  = params['second']  || "00";
-  this.format  = params['format']  || "YOWDHMS";
-  this.bgcolor = params['bgcolor'] || "#FFFFFF";
-  this.color   = params['color']   || "#000000"; 
-}
+(function () {
+  'use strict';
 
-var Utils = {
-  getParams: function () {
-    var _i,
-        _hash,
-        _vars   = {},
-        _hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
-    for (_i = _hashes.length - 1; _i >= 0; _i--) {
-      _hash = _hashes[_i].split('=');
-      _vars[_hash[0]] = _hash[1];
-    }
-
-    return _vars;
-  }
-};
-
-var Multiple = {
-  helpers: {
-    status: function(_target) {
-      var _now = new Date();
-      if (_now > _target) {
-        return true;
-      } else if (_now < _target) {
-        return false;
+  var Multiple = {
+    models: {
+      occurrence: function (params) {
+        this.year    = params.year    || "1900";
+        this.month   = params.month   || "January";
+        this.day     = params.day     || "01";
+        this.hour    = params.hour    || "00";
+        this.minute  = params.minute  || "00";
+        this.second  = params.second  || "00";
+        this.format  = params.format  || "YOWDHMS";
+        this.bgcolor = params.bgcolor || "#FFFFFF";
+        this.color   = params.color   || "#000000";
       }
     },
-  },
 
-  initialize: function() {
-    var _target,
-        _event,
-        _layout,
-        _$el,
-        _$count;
-    
-    _$el    = $('body');
-    _$count = $('#count');
+    helpers: {
+      status: function (target) {
+        return new Date() > target;
+      },
 
-    _target = new Event(Utils.getParams());
-    _event  = new Date(
-        _target.month   + 
-        _target.day     + "," + 
-        _target.year    + " " + 
-        _target.hour    + ":" + 
-        _target.minute  + ":" + 
-        _target.second
-      );
+      getParams: function () {
+        var i,
+          hash,
+          vars = {},
+          hashes = window.location.href.slice(window.location.href.indexOf('?') + 1)
+                                         .split('&');
 
-    _$el.css('backgroundColor', _target.bgcolor);
+        for (i = hashes.length - 1; i >= 0; i--) {
+          hash = hashes[i].split('=');
+          vars[hash[0]] = hash[1];
+        }
 
-    if (Multiple.helpers.status(_event)) {
-      _$count.
-        countdown('destroy').
-        css('color', _target.color).
-        countdown({
-            compact: true,
-            since: _event,
-            format: _target.format
-          });
-    } else {
-      _$count.
-        countdown('destroy').
-        css('color', _target.color).
-        countdown({
-            until: _event,
-            compact: true,
-            format: _target.format,
-            onExpiry: Multiple.initialize
-          });
+        return vars;
+      }
+    },
+
+    initialize: function () {
+      var target = new Multiple.models.occurrence(Multiple.helpers.getParams()),
+          $el = $('body'),
+          $count = $('#count'),
+          _event = new Date(
+              target.month   + 
+              target.day     + "," + 
+              target.year    + " " + 
+              target.hour    + ":" + 
+              target.minute  + ":" + 
+              target.second
+            );
+
+      $el.css('backgroundColor', target.bgcolor);
+
+      if (Multiple.helpers.status(_event)) {
+        $count.
+          countdown('destroy').
+          css('color', target.color).
+          countdown({
+              compact: true,
+              since: _event,
+              format: target.format
+            });
+      } else {
+        $count.
+          countdown('destroy').
+          css('color', target.color).
+          countdown({
+              until: _event,
+              compact: true,
+              format: target.format,
+              onExpiry: Multiple.initialize
+            });
+      }
     }
-  }
-};
+  };
 
-$(function () { Multiple.initialize(); });
+  $(function () { Multiple.initialize(); });
+
+}());
