@@ -57,27 +57,6 @@
               target.second
             );
 
-      // if (Multiple.helpers.status(_event)) {
-      //   $count.
-      //     countdown('destroy').
-      //     css('color', target.color).
-      //     countdown({
-      //         compact: true,
-      //         since: _event,
-      //         format: target.format
-      //       });
-      // } else {
-      //   $count.
-      //     countdown('destroy').
-      //     css('color', target.color).
-      //     countdown({
-      //         until: _event,
-      //         compact: true,
-      //         format: target.format,
-      //         onExpiry: Multiple.initialize
-      //       });
-      // }
-
       _options = {
         since: {
           compact: true,
@@ -98,11 +77,10 @@
       $count.
         css('color', target.color).
         countdown('destroy').
-        countdown(options);
+        countdown(options).
+        fitText(1.5);
 
       $('body').css('backgroundColor', target.bgcolor);
-
-      $count.fitText(1.5);
     }
   };
 
