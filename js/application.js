@@ -1,9 +1,3 @@
-/***
- * Multiple (2010-Present)
- * Damon Zucconi
- * CC BY-SA 3.0
- **/
-
 (function () {
   'use strict';
 
@@ -23,8 +17,12 @@
     },
 
     helpers: {
-      hasPassed: function (target) {
-        return new Date() > target;
+      setOptions: function (target, options) {
+        if (new Date() > target) {
+          return options.since;
+        } else {
+          return options.until;
+        };
       },
 
       getParams: function () {
@@ -65,14 +63,14 @@
         },
 
         until: {
-          until: _event,
           compact: true,
+          until: _event,
           format: target.format,
           onExpiry: Multiple.initialize 
         }
       };
 
-      if (Multiple.helpers.hasPassed(_event)) { options = _options.since; } else { options = _options.until; };
+      options = Multiple.helpers.setOptions(_event, _options);
 
       $count.
         css('color', target.color).
