@@ -18,11 +18,8 @@
 
     helpers: {
       setOptions: function (target, options) {
-        if (new Date() > target) {
-          return options.since;
-        } else {
-          return options.until;
-        };
+        if (new Date() > target) { return options.since; }
+        return options.until;
       },
 
       getParams: function () {
