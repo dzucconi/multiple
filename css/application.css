@@ -33,7 +33,7 @@ body {
 }
 
 .blink {
-  margin-right: .05em;
+  margin-right: .075em;
 
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
