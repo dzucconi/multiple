@@ -6,9 +6,10 @@ module.exports = function (grunt) {
       plugin: {
         files: [{
           "build/multiple.min.js": [
-            "src/application.js",
             "src/vendor/jquery.fittext.js",
-            "src/vendor/jquery.countdown.js"
+            "src/vendor/jquery.countdown.js",
+            "src/vendor/analytics.js",
+            "src/application.js"
           ],
         }]
       }
