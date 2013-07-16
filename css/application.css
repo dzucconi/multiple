@@ -20,6 +20,7 @@ body {
   vertical-align: middle;
   text-align: center;
   cursor: default;
+
   -webkit-user-select: none;
    -khtml-user-select: none;
      -moz-user-select: none;
@@ -32,10 +33,21 @@ body {
     to { opacity: 0.0; }
 }
 
+@-moz-keyframes blinker {
+  from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+@keyframes blinker {
+  from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
 .blink {
   margin-right: .075em;
-  -webkit-animation-iteration-count: infinite;
-  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
-         -webkit-animation-duration: 1s;
-             -webkit-animation-name: blinker;
+
+  -webkit-animation: blinker 1s infinite cubic-bezier(1.0, 0, 0, 1.0);
+     -moz-animation: blinker 1s infinite cubic-bezier(1.0, 0, 0, 1.0);
+       -o-animation: blinker 1s infinite cubic-bezier(1.0, 0, 0, 1.0);
+          animation: blinker 1s infinite cubic-bezier(1.0, 0, 0, 1.0);
 }
