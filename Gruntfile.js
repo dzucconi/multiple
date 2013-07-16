@@ -5,7 +5,11 @@ module.exports = function (grunt) {
     uglify: {
       plugin: {
         files: [{
-          "build/multiple.min.js": ["src/application.js", "src/vendor/jquery.fittext.js", "src/vendor/jquery.countdown.js"],
+          "build/multiple.min.js": [
+            "src/application.js",
+            "src/vendor/jquery.fittext.js",
+            "src/vendor/jquery.countdown.js"
+          ],
         }]
       }
     }
