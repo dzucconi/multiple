@@ -30,8 +30,8 @@
         hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
 
         for (i = hashes.length - 1; i >= 0; i--) {
-          hash = hashes[i].split("=");
-          vars[hash[0]] = hash[1];
+          hash            = hashes[i].split("=");
+          vars[hash[0]]   = hash[1];
         }
 
         return vars;
@@ -54,16 +54,18 @@
 
       _options = {
         since: {
-          compact : true,
-          since   : _event,
-          format  : target.format
+          compact:        true,
+          since:          _event,
+          format:         target.format,
+          timeSeparator:  "<span class='blink'>:</span>"
         },
 
         until: {
-          compact  : true,
-          until    : _event,
-          format   : target.format,
-          onExpiry : Multiple.initialize
+          compact:        true,
+          until:          _event,
+          format:         target.format,
+          onExpiry:       Multiple.initialize,
+          timeSeparator:  "<span class='blink'>:</span>"
         }
       };
 
