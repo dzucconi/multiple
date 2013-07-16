@@ -24,11 +24,10 @@
       },
 
       getParams: function() {
-        var i,
-          hash,
-          vars = {},
-          hashes = window.location.href.slice(window.location.href.indexOf("?") + 1)
-                                       .split("&");
+        var i, hash, vars, hashes;
+
+        vars = {};
+        hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
 
         for (i = hashes.length - 1; i >= 0; i--) {
           hash = hashes[i].split("=");
