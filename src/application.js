@@ -44,8 +44,6 @@ _.mixin({
   };
 
   Countdown.prototype.reset = function() {
-    console.log("reset");
-
     this.options["since"]   = this.options.until;
     this.options            = _.omit(this.options, "until");
 
