@@ -75,9 +75,8 @@ _.mixin({
         second: "00"
       });
 
-      date = _.toDate(params);
-
-      options = _.pick(params, "format");
+      date      = _.toDate(params);
+      options   = _.pick(params, "format");
       options[new Date() > date ? "since" : "until"] = date;
 
       countdown = new Countdown($("#count"), options);
