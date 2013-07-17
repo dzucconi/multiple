@@ -1,85 +1,95 @@
-(function() {
+_.mixin({
+  getParams: function() {
+    var href = window.location.href;
+
+    return href.slice(href.indexOf("?") + 1).split("&").reduce(function(obj, pair) {
+      var kv = pair.split("=");
+
+      obj[kv[0]] = kv[1];
+
+      return obj;
+    }, {});
+  }
+});
+
+(function(exports) {
   "use strict";
 
-  var Multiple = {
-    models: {
-      occurrence: function(params) {
-        this.year    = params.year    || "1900";
-        this.month   = params.month   || "January";
-        this.day     = params.day     || "01";
-        this.hour    = params.hour    || "00";
-        this.minute  = params.minute  || "00";
-        this.second  = params.second  || "00";
-        this.format  = params.format  || "YOWDHMS";
-        this.bgcolor = params.bgcolor || "#FFFFFF";
-        this.color   = params.color   || "#000000";
-      }
-    },
+  var Occurrence, Countdown, App;
 
-    helpers: {
-      setOptions: function(target, options) {
-        if (new Date() > target) { return options.since; }
+  Occurrence = function(params) {
+    this.year    = params.year    || "1900";
+    this.month   = params.month   || "January";
+    this.day     = params.day     || "01";
+    this.hour    = params.hour    || "00";
+    this.minute  = params.minute  || "00";
+    this.second  = params.second  || "00";
+    this.format  = params.format  || "YOWDHMS";
+    this.bgcolor = params.bgcolor || "#FFFFFF";
+    this.color   = params.color   || "#000000";
+  };
 
-        return options.until;
-      },
+  Occurrence.prototype.toDate = function() {
+    return new Date(
+      this.month   +
+      this.day     + "," +
+      this.year    + " " +
+      this.hour    + ":" +
+      this.minute  + ":" +
+      this.second
+    );
+  };
 
-      getParams: function() {
-        var i, hash, vars, hashes;
+  Countdown = function(el, options) {
+    self = this;
 
-        vars = {};
-        hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
+    this.options = _.defaults(options, {
+      compact:        true,
+      format:         "YOWDHMS",
+      timeSeparator:  "<span class='blink'>:</span>",
+      onExpiry:       function() { _.defer(self.reset.bind(self)); }
+    });
 
-        for (i = hashes.length - 1; i >= 0; i--) {
-          hash            = hashes[i].split("=");
-          vars[hash[0]]   = hash[1];
-        }
+    this.el = el;
 
-        return vars;
-      }
+    this.el.countdown(this.options);
+  };
+
+  Countdown.prototype.reset = function() {
+    console.log("reset");
+
+    this.options["since"]   = this.options.until;
+    this.options            = _.omit(this.options, "until");
+
+    this.el.countdown("destroy").countdown(this.options);
+  };
+
+  App = {
+    displayOptions: function(options) {
+      options = _.defaults(options, {
+        bgcolor:  "#000000",
+        color:    "#ffffff"
+      });
+
+      $("body").css({
+        backgroundColor: options.bgcolor,
+        color: options.color
+      }).fitText(1.5);
     },
 
     initialize: function() {
-      var _options,
-          options,
-          target = new Multiple.models.occurrence(Multiple.helpers.getParams()),
-          $count = $("#count"),
-          _event = new Date(
-              target.month   +
-              target.day     + "," +
-              target.year    + " " +
-              target.hour    + ":" +
-              target.minute  + ":" +
-              target.second
-            );
+      var occurrence, options;
 
-      _options = {
-        since: {
-          compact:        true,
-          since:          _event,
-          format:         target.format,
-          timeSeparator:  "<span class='blink'>:</span>"
-        },
+      occurrence = new Occurrence(_.getParams());
 
-        until: {
-          compact:        true,
-          until:          _event,
-          format:         target.format,
-          onExpiry:       Multiple.initialize,
-          timeSeparator:  "<span class='blink'>:</span>"
-        }
-      };
+      options = _.pick(occurrence, "format");
+      options[new Date() > occurrence.toDate() ? "since" : "until"] = occurrence.toDate();
 
-      options = Multiple.helpers.setOptions(_event, _options);
+      exports.countdown = new Countdown($("#count"), options);
 
-      $count.
-        css("color", target.color).
-        countdown("destroy").
-        countdown(options).
-        fitText(1.5);
-
-      $("body").css("backgroundColor", target.bgcolor);
+      this.displayOptions(_.pick(occurrence, "color", "bgcolor"));
     }
   };
 
-  $(function() { Multiple.initialize(); });
-}());
+  $(function() { App.initialize(); });
+}(this));
