@@ -9,36 +9,24 @@ _.mixin({
 
       return obj;
     }, {});
+  },
+
+  toDate: function(options) {
+    return new Date(
+      options.month   +
+      options.day     + "," +
+      options.year    + " " +
+      options.hour    + ":" +
+      options.minute  + ":" +
+      options.second
+    );
   }
 });
 
 (function(exports) {
   "use strict";
 
-  var Occurrence, Countdown, App;
-
-  Occurrence = function(params) {
-    this.year    = params.year    || "1900";
-    this.month   = params.month   || "January";
-    this.day     = params.day     || "01";
-    this.hour    = params.hour    || "00";
-    this.minute  = params.minute  || "00";
-    this.second  = params.second  || "00";
-    this.format  = params.format  || "YOWDHMS";
-    this.bgcolor = params.bgcolor || "#FFFFFF";
-    this.color   = params.color   || "#000000";
-  };
-
-  Occurrence.prototype.toDate = function() {
-    return new Date(
-      this.month   +
-      this.day     + "," +
-      this.year    + " " +
-      this.hour    + ":" +
-      this.minute  + ":" +
-      this.second
-    );
-  };
+  var Countdown, App;
 
   Countdown = function(el, options) {
     self = this;
@@ -67,27 +55,36 @@ _.mixin({
   App = {
     displayOptions: function(options) {
       options = _.defaults(options, {
-        bgcolor:  "#000000",
-        color:    "#ffffff"
+        bgcolor:  "#ffffff",
+        color:    "#000000"
       });
 
       $("body").css({
-        backgroundColor: options.bgcolor,
-        color: options.color
+        backgroundColor:  options.bgcolor,
+        color:            options.color
       }).fitText(1.5);
     },
 
     initialize: function() {
-      var occurrence, options;
+      var params, date, options, countdown;
 
-      occurrence = new Occurrence(_.getParams());
+      params = _.defaults(_.getParams(), {
+        year:   "1900",
+        month:  "January",
+        day:    "01",
+        hour:   "00",
+        minute: "00",
+        second: "00"
+      });
 
-      options = _.pick(occurrence, "format");
-      options[new Date() > occurrence.toDate() ? "since" : "until"] = occurrence.toDate();
+      date = _.toDate(params);
 
-      exports.countdown = new Countdown($("#count"), options);
+      options = _.pick(params, "format");
+      options[new Date() > date ? "since" : "until"] = date;
 
-      this.displayOptions(_.pick(occurrence, "color", "bgcolor"));
+      countdown = new Countdown($("#count"), options);
+
+      this.displayOptions(_.pick(params, "color", "bgcolor"));
     }
   };
 
