@@ -1,28 +1,25 @@
 {
-  "name": "Multiple",
-  "title": "Multiple",
-  "version": "0.0.1",
-  "description": "",
-  "keywords": [],
-  "homepage": "",
+  "name":         "Multiple",
+  "title":        "Multiple",
+  "version":      "0.0.1",
+  "homepage":     "http://xxith.com",
 
   "repository" : {
     "type": "git",
-    "url": "git://github.com/dzucconi/multiple.git"
+    "url":  "git://github.com/dzucconi/multiple.git"
   },
 
   "bugs": {
-    "url": "https://github.com/dzucconi/multiple/issues",
-    "url": "https://github.com/dzucconi/multiple/blob/master/LICENSE-MIT"
+    "url": "https://github.com/dzucconi/multiple/issues"
   },
 
   "licenses": [{
-    "type": "MIT"
+    "type": "CC0"
   }],
 
   "devDependencies" : {
-    "grunt": "0.4.1",
-    "grunt-cli": "0.1.9",
+    "grunt":                "0.4.1",
+    "grunt-cli":            "0.1.9",
     "grunt-contrib-uglify": "0.2.2"
   }
 }
