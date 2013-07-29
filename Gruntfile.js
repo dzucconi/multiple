@@ -3,9 +3,10 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON("package.json"),
 
     uglify: {
-      plugin: {
+      multiple: {
         files: [{
           "build/multiple.min.js": [
+            "src/vendor/underscore.js",
             "src/vendor/jquery.fittext.js",
             "src/vendor/jquery.countdown.js",
             "src/vendor/analytics.js",
