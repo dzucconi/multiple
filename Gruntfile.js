@@ -10,15 +10,31 @@ module.exports = function (grunt) {
       build: {
         files: [{
           expand: true,
-          cwd: "src/",
-          src: ["**"],
-          dest: "build/",
+          cwd:    "src/",
+          src:    ["**"],
+          dest:   "build/",
         }]
       }
     },
 
     useminPrepare: {
       html: ["build/index.html"]
+    },
+
+    rev: {
+      options: {
+        encoding:   "utf8",
+        algorithm:  "md5",
+        length:     8
+      },
+
+      assets: {
+        files: [{
+          src: [
+            "build/javascripts/multiple.min.js"
+          ]
+        }]
+      }
     },
 
     usemin: {
@@ -31,6 +47,15 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-usemin");
   grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-uglify");
+  grunt.loadNpmTasks("grunt-rev");
 
-  grunt.registerTask("default", ["clean", "copy", "useminPrepare", "concat", "uglify", "usemin"]);
+  grunt.registerTask("default", [
+    "clean",
+    "copy",
+    "useminPrepare",
+    "concat",
+    "uglify",
+    "rev",
+    "usemin"
+  ]);
 };
