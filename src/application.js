@@ -5,7 +5,7 @@ _.mixin({
     return href.slice(href.indexOf("?") + 1).split("&").reduce(function(obj, pair) {
       var kv = pair.split("=");
 
-      obj[kv[0]] = kv[1];
+      obj[kv[0]] = decodeURIComponent(kv[1]);
 
       return obj;
     }, {});
