@@ -31,7 +31,8 @@ module.exports = function (grunt) {
       assets: {
         files: [{
           src: [
-            "build/javascripts/multiple.min.js"
+            "build/javascripts/application.min.js",
+            "build/stylesheets/application.css"
           ]
         }]
       }
