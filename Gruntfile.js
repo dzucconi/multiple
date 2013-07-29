@@ -2,29 +2,35 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
 
-    uglify: {
-      multiple: {
+    clean: {
+      build: ["build"]
+    },
+
+    copy: {
+      build: {
         files: [{
-          "build/multiple.min.js": [
-            "src/vendor/underscore.js",
-            "src/vendor/jquery.fittext.js",
-            "src/vendor/jquery.countdown.js",
-            "src/vendor/analytics.js",
-            "src/application.js"
-          ],
+          expand: true,
+          cwd: "src/",
+          src: ["**"],
+          dest: "build/",
         }]
       }
     },
 
-    shell: {
-      generateVersion: {
-        command: "git rev-parse HEAD > VERSION"
-      }
+    useminPrepare: {
+      html: ["build/index.html"]
+    },
+
+    usemin: {
+      html: ["build/index.html"]
     }
   });
 
-  grunt.loadNpmTasks("grunt-shell");
+  grunt.loadNpmTasks("grunt-contrib-clean");
+  grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-usemin");
+  grunt.loadNpmTasks("grunt-contrib-concat");
   grunt.loadNpmTasks("grunt-contrib-uglify");
 
-  grunt.registerTask("build", ["uglify", "shell:generateVersion"]);
+  grunt.registerTask("default", ["clean", "copy", "useminPrepare", "concat", "uglify", "usemin"]);
 };
