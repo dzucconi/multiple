@@ -14,10 +14,17 @@ module.exports = function (grunt) {
           ],
         }]
       }
+    },
+
+    shell: {
+      generateVersion: {
+        command: "git rev-parse HEAD > VERSION"
+      }
     }
   });
 
+  grunt.loadNpmTasks("grunt-shell");
   grunt.loadNpmTasks("grunt-contrib-uglify");
 
-  grunt.registerTask("build", ["uglify"]);
+  grunt.registerTask("build", ["uglify", "shell:generateVersion"]);
 };
