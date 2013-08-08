@@ -29,7 +29,7 @@ _.mixin({
   var Countdown, App;
 
   Countdown = function(el, options) {
-    self = this;
+    var self = this;
 
     this.options = _.defaults(options, {
       compact:        true,
