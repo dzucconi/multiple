@@ -28,6 +28,13 @@ body {
           user-select: none;
 }
 
+.countdown-hours,
+.countdown-minutes,
+.countdown-seconds {
+  display: inline-block;
+  min-width: 1.1em;
+}
+
 @-webkit-keyframes blinker {
   from { opacity: 1.0; }
     to { opacity: 0.0; }
